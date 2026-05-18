@@ -99,8 +99,8 @@ export default function Home() {
         </section>
 
         <HowItWorks />
-        <Gallery />
         <TwitterCTA />
+        <Gallery />
 
         <footer className="text-center py-10 text-gray-600 text-sm border-t border-white/5">
           <p className="text-gray-400">
