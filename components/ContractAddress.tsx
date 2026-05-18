@@ -3,13 +3,13 @@
 import { useState } from "react";
 
 const CONTRACT_ADDRESS =
-  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "coming soon...";
+  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ||
+  "FEc5dkHy8zD8YD3Y9NpPmyvAEZY4AkxgpeH6K2LVpump";
 
 export default function ContractAddress() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    if (CONTRACT_ADDRESS === "coming soon...") return;
     try {
       await navigator.clipboard.writeText(CONTRACT_ADDRESS);
       setCopied(true);
@@ -27,44 +27,38 @@ export default function ContractAddress() {
   };
 
   return (
-    <section className="max-w-3xl mx-auto px-4 py-8">
+    <section className="max-w-2xl mx-auto px-4 py-4">
       <div
         onClick={handleCopy}
-        className="glass rounded-2xl p-4 md:p-5 cursor-pointer group
-                   hover:border-[var(--pigeon-iridescent)] transition-all duration-300
+        className="glass-strong rounded-2xl p-4 cursor-pointer group glow-pulse
+                   hover:border-[var(--pigeon-iridescent)]/40 transition-all duration-300
                    hover:scale-[1.01] active:scale-[0.99]"
       >
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-            <span className="text-2xl shrink-0">🐦</span>
+            <div className="w-10 h-10 rounded-xl bg-[var(--pigeon-iridescent)]/10 flex items-center justify-center shrink-0">
+              <span className="text-xl">🐦</span>
+            </div>
             <div className="min-w-0">
-              <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">
-                Contract Address
+              <p className="text-[10px] text-[var(--pigeon-gold)] uppercase tracking-[0.2em] font-bold mb-0.5">
+                $PIGEONIFY — Contract Address
               </p>
-              <p
-                className={`text-sm md:text-base font-mono truncate ${
-                  CONTRACT_ADDRESS === "coming soon..."
-                    ? "text-gray-500 italic"
-                    : "text-[var(--pigeon-iridescent)]"
-                }`}
-              >
+              <p className="text-sm font-mono text-[var(--pigeon-iridescent)] truncate">
                 {CONTRACT_ADDRESS}
               </p>
             </div>
           </div>
 
-          {CONTRACT_ADDRESS !== "coming soon..." && (
-            <button
-              className={`shrink-0 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300
+          <button
+            className={`shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300
               ${
                 copied
-                  ? "bg-green-600/20 text-green-400 border border-green-500/40"
-                  : "bg-[var(--pigeon-steel)]/20 text-[var(--pigeon-iridescent)] border border-[var(--pigeon-steel)]/40 group-hover:bg-[var(--pigeon-steel)]/40"
+                  ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                  : "bg-white/5 text-gray-400 border border-white/10 group-hover:text-[var(--pigeon-iridescent)] group-hover:border-[var(--pigeon-iridescent)]/30"
               }`}
-            >
-              {copied ? "✓ Copied!" : "📋 Copy"}
-            </button>
-          )}
+          >
+            {copied ? "✓ Copied!" : "Copy CA"}
+          </button>
         </div>
       </div>
     </section>

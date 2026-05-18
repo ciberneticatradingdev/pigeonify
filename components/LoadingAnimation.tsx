@@ -10,34 +10,51 @@ const messages = [
   "Cooing intensifies...",
   "Practicing head bobbing...",
   "Scoping out breadcrumbs...",
+  "Adjusting neck shimmer...",
 ];
 
 export default function LoadingAnimation() {
   const [msgIndex, setMsgIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const msgInterval = setInterval(() => {
       setMsgIndex((i) => (i + 1) % messages.length);
     }, 2500);
-    return () => clearInterval(interval);
+
+    const progressInterval = setInterval(() => {
+      setProgress((p) => Math.min(p + Math.random() * 8, 90));
+    }, 1000);
+
+    return () => {
+      clearInterval(msgInterval);
+      clearInterval(progressInterval);
+    };
   }, []);
 
   return (
-    <div className="text-center space-y-8 py-12">
-      <div className="text-8xl md:text-9xl pigeon-bounce">🐦</div>
+    <div className="text-center space-y-8 py-12 fade-in-up">
+      <div className="text-7xl md:text-8xl pigeon-bounce">🐦</div>
 
-      <div className="relative mx-auto w-20 h-20">
-        <div className="absolute inset-0 border-4 border-[var(--pigeon-steel)]/20 rounded-full" />
-        <div className="absolute inset-0 border-4 border-transparent border-t-[var(--pigeon-iridescent)] rounded-full spin-slow" />
+      {/* Progress bar */}
+      <div className="max-w-xs mx-auto">
+        <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-[var(--pigeon-steel)] to-[var(--pigeon-iridescent)] rounded-full transition-all duration-1000 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
 
       <div className="space-y-2">
         <p className="text-xl font-bold text-[var(--pigeon-iridescent)] animate-pulse">
           Pigeonifying...
         </p>
-        <p className="text-gray-500 text-sm">{messages[msgIndex]}</p>
+        <p className="text-gray-500 text-sm h-5 transition-all duration-300">
+          {messages[msgIndex]}
+        </p>
         <p className="text-gray-600 text-xs mt-4">
-          This usually takes 10-30 seconds
+          Usually takes 15-30 seconds
         </p>
       </div>
     </div>

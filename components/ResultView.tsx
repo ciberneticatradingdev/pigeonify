@@ -22,18 +22,26 @@ export default function ResultView({
     document.body.removeChild(link);
   };
 
+  const handleShare = () => {
+    const text = encodeURIComponent(
+      "I just got pigeonified 🐦 Check it out at pigeonify.vercel.app\n\n@PigeonifyOG"
+    );
+    window.open(`https://x.com/intent/tweet?text=${text}`, "_blank");
+  };
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 fade-in-up">
       <div className="text-center">
-        <h2 className="text-3xl md:text-4xl font-black gradient-text">
-          You&apos;ve Been Pigeonified! 🐦
+        <h2 className="text-3xl md:text-5xl font-black gradient-text">
+          You&apos;ve Been Pigeonified!
         </h2>
-        <p className="text-gray-400 mt-2">Before &amp; After</p>
+        <p className="text-gray-500 mt-2 text-sm">Before → After</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Original */}
         <div className="space-y-3">
-          <p className="text-center text-gray-400 font-semibold text-sm uppercase tracking-wider">
+          <p className="text-center text-gray-500 font-semibold text-xs uppercase tracking-[0.2em]">
             👤 Human (boring)
           </p>
           <div className="relative aspect-square rounded-2xl overflow-hidden glass">
@@ -47,11 +55,12 @@ export default function ResultView({
           </div>
         </div>
 
+        {/* Pigeonified */}
         <div className="space-y-3">
-          <p className="text-center text-[var(--pigeon-iridescent)] font-semibold text-sm uppercase tracking-wider">
+          <p className="text-center text-[var(--pigeon-iridescent)] font-semibold text-xs uppercase tracking-[0.2em]">
             🐦 Pigeonified (superior)
           </p>
-          <div className="relative aspect-square rounded-2xl overflow-hidden glass ring-2 ring-[var(--pigeon-iridescent)]/50">
+          <div className="relative aspect-square rounded-2xl overflow-hidden glass-strong ring-2 ring-[var(--pigeon-iridescent)]/30 glow-pulse">
             <Image
               src={pigeonified}
               alt="Pigeonified result"
@@ -63,21 +72,29 @@ export default function ResultView({
         </div>
       </div>
 
-      <div className="flex justify-center gap-4 flex-wrap">
+      {/* Actions */}
+      <div className="flex justify-center gap-3 flex-wrap">
         <button
           onClick={handleDownload}
-          className="px-8 py-3 bg-[var(--pigeon-steel)] hover:bg-[var(--pigeon-iridescent)]
-                     rounded-xl font-bold transition-all duration-300 hover:scale-105
-                     flex items-center gap-2"
+          className="btn-primary px-8 py-3 rounded-xl font-bold flex items-center gap-2"
         >
-          ⬇️ Download Pigeonified
+          <span className="relative z-10">⬇️ Download</span>
+        </button>
+        <button
+          onClick={handleShare}
+          className="px-8 py-3 rounded-xl font-bold border border-white/10
+                     hover:border-[var(--pigeon-iridescent)]/40 hover:bg-white/5
+                     transition-all duration-300 flex items-center gap-2"
+        >
+          𝕏 Share on X
         </button>
         <button
           onClick={onReset}
-          className="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-bold
-                     transition-all duration-300 border border-gray-600"
+          className="px-8 py-3 rounded-xl font-bold border border-white/10
+                     hover:border-white/20 hover:bg-white/5
+                     transition-all duration-300"
         >
-          🔄 Pigeonify Another
+          🔄 Another
         </button>
       </div>
     </div>

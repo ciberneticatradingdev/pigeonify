@@ -7,6 +7,8 @@ import Gallery from "@/components/Gallery";
 import UploadZone from "@/components/UploadZone";
 import ResultView from "@/components/ResultView";
 import LoadingAnimation from "@/components/LoadingAnimation";
+import HowItWorks from "@/components/HowItWorks";
+import TwitterCTA from "@/components/TwitterCTA";
 
 export default function Home() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
@@ -58,44 +60,73 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen">
-      <Hero />
-      <ContractAddress />
+    <main className="min-h-screen relative">
+      <div className="bg-blobs" />
+      <div className="noise" />
 
-      <section id="upload" className="max-w-4xl mx-auto px-4 py-16">
-        {!originalImage && !isLoading && <UploadZone onUpload={handleUpload} />}
+      <div className="relative z-10">
+        <Hero />
+        <ContractAddress />
 
-        {isLoading && <LoadingAnimation />}
+        <section id="upload" className="max-w-4xl mx-auto px-4 py-16">
+          {!originalImage && !isLoading && (
+            <UploadZone onUpload={handleUpload} />
+          )}
 
-        {error && (
-          <div className="text-center space-y-4">
-            <div className="glass rounded-2xl p-6 max-w-md mx-auto">
-              <p className="text-red-400 text-lg">⚠️ {error}</p>
+          {isLoading && <LoadingAnimation />}
+
+          {error && (
+            <div className="text-center space-y-4 fade-in-up">
+              <div className="glass-strong rounded-2xl p-6 max-w-md mx-auto">
+                <p className="text-red-400 text-lg">⚠️ {error}</p>
+              </div>
+              <button
+                onClick={handleReset}
+                className="px-6 py-3 btn-primary rounded-xl font-semibold relative z-10"
+              >
+                <span className="relative z-10">Try Again</span>
+              </button>
             </div>
-            <button
-              onClick={handleReset}
-              className="px-6 py-3 bg-[var(--pigeon-steel)] hover:bg-[var(--pigeon-iridescent)] rounded-xl transition-colors font-semibold"
+          )}
+
+          {pigeonifiedImage && originalImage && (
+            <ResultView
+              original={originalImage}
+              pigeonified={pigeonifiedImage}
+              onReset={handleReset}
+            />
+          )}
+        </section>
+
+        <HowItWorks />
+        <Gallery />
+        <TwitterCTA />
+
+        <footer className="text-center py-10 text-gray-600 text-sm border-t border-white/5">
+          <p className="text-gray-400">
+            PIGEONIFY 🐦 — No pigeons were harmed in the making of this app
+          </p>
+          <p className="mt-1">Powered by AI & questionable life choices</p>
+          <div className="mt-4 flex justify-center gap-6 text-xs text-gray-600">
+            <a
+              href="https://x.com/PigeonifyOG"
+              target="_blank"
+              rel="noopener"
+              className="hover:text-[var(--pigeon-iridescent)] transition-colors"
             >
-              Try Again
-            </button>
+              𝕏 @PigeonifyOG
+            </a>
+            <a
+              href="https://pump.fun/coin/FEc5dkHy8zD8YD3Y9NpPmyvAEZY4AkxgpeH6K2LVpump"
+              target="_blank"
+              rel="noopener"
+              className="hover:text-[var(--pigeon-gold)] transition-colors"
+            >
+              pump.fun
+            </a>
           </div>
-        )}
-
-        {pigeonifiedImage && originalImage && (
-          <ResultView
-            original={originalImage}
-            pigeonified={pigeonifiedImage}
-            onReset={handleReset}
-          />
-        )}
-      </section>
-
-      <Gallery />
-
-      <footer className="text-center py-8 text-gray-500 text-sm border-t border-gray-800">
-        <p>PIGEONIFY 🐦 — No pigeons were harmed in the making of this app</p>
-        <p className="mt-1">Powered by AI & questionable life choices</p>
-      </footer>
+        </footer>
+      </div>
     </main>
   );
 }
